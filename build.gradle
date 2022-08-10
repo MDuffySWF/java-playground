@@ -16,8 +16,7 @@ ext {
     junitVersion = '5.8.2'
 }
 
-sourceCompatibility = '18'
-targetCompatibility = '18'
+
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -53,4 +52,14 @@ jlink {
 
 jlinkZip {
     group = 'distribution'
+}
+
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.files.collect { it.name }.join(' '),
+                'Main-Class': 'com.galvanize.Application'
+        )
+    }
 }
